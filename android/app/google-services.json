@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "335139419358",
+    "project_id": "jaadapk-ca29a",
+    "storage_bucket": "jaadapk-ca29a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335139419358:android:b4293bf5ab9c91c54a3e4f",
+        "android_client_info": {
+          "package_name": "com.example.loginpage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe-I2n5KcgS9hKDOjpfuZB6XjUL1wh-G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
