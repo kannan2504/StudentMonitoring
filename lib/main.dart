@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
         AppRoutes.reset: (context) => ResetScreen(),
         AppRoutes.editpage: (context) => EditPage(),
         AppRoutes.studentlists: (context) => StudentLists(),
-        // AppRoutes.editlist: (context) => StudentListEditpage(),
       },
     );
   }
@@ -68,6 +67,4 @@ class AppRoutes {
   static const String editpage = '/editpage';
   static const String studentform = '/studentform';
   static const String studentlists = '/studentList';
-
-  static const String editlist = '/editlist';
 }
