@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:loginpage/features/login_screen/Data/Entity/UserModal.dart';
-import 'package:loginpage/features/login_screen/Domain/Entity/User.dart';
-import 'package:loginpage/features/login_screen/Domain/Usecases/GoogleSIgninUsecase.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Entity/UserModal.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Entity/User.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Usecases/GoogleSIgninUsecase.dart';
 
 class LoginProvider extends ChangeNotifier {
   final GoogleSignInUseCase googleSignInUseCase;

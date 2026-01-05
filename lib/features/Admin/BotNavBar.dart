@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:loginpage/features/homeWork/Presentaion/pages/HomeWorkPage.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/home_screen.dart';
-import 'package:loginpage/features/profile/Presentaion/pages/HomeWorkPage.dart';
+import 'package:loginpage/features/Admin/homeWork/Presentaion/pages/HomeWorkPage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
+import 'package:loginpage/features/Admin/profile/Presentaion/pages/HomeWorkPage.dart';
 import 'package:loginpage/main.dart';
+
+import 'homeWork/Presentaion/pages/HomeWorkPage.dart';
+import 'login_screen/Presentation/pages/home_screen.dart';
+import 'profile/Presentaion/pages/HomeWorkPage.dart';
 
 class MyBotNavBar extends StatefulWidget {
   const MyBotNavBar({super.key});

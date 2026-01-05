@@ -1,16 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loginpage/features/login_screen/Data/Logic/AuthRemoteDataSource.dart';
-import 'package:loginpage/features/login_screen/Data/Repository/RepoImpl.dart';
-import 'package:loginpage/features/login_screen/Domain/Usecases/GoogleSIgninUsecase.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/home_screen.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/registerPage.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/splash_screen.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/student_list_editpage.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/student_lists.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/loginProvider.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/loginPage.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Logic/AuthRemoteDataSource.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Repository/RepoImpl.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Usecases/GoogleSIgninUsecase.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/registerPage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/splash_screen.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_list_editpage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_lists.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/loginPage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

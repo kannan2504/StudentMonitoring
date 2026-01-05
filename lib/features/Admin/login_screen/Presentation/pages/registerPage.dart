@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/loginProvider.dart';
-import 'package:loginpage/features/login_screen/Presentation/pages/loginPage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/loginPage.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
