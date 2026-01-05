@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
-import 'package:loginpage/features/login_screen/Data/Service/google_auth_service.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/loginProvider.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Service/google_auth_service.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
 import 'package:loginpage/main.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
     return Consumer<Themeprovider>(
       builder: (context, theme, child) {
         return Scaffold(
-          backgroundColor: Colors.blueAccent,
           body: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -74,8 +73,9 @@ class _LoginPageState extends State<LoginPage> {
 
                 /// 📧 Email Field
                 UserTextField(
+                  label: "Email",
                   controller: emailController,
-                  hint: "Email",
+                  hint: "abc@gmail.com",
                   prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -84,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 /// 🔐 Password Field
                 UserTextField(
+                  label: "Password",
                   controller: passwordController,
                   hint: "Password",
                   prefixIcon: Icons.lock,

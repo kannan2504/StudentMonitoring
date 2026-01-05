@@ -3,14 +3,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
 
-class StudentListEditpage extends StatelessWidget {
+class StudentListEditpage extends StatefulWidget {
   final String docId;
   StudentListEditpage({super.key, required this.docId});
+
+  @override
+  State<StudentListEditpage> createState() => _StudentListEditpageState();
+}
+
+class _StudentListEditpageState extends State<StudentListEditpage> {
   final namecntrl = TextEditingController();
+
   final agecntrl = TextEditingController();
+
   final phonecntrl = TextEditingController();
+
   final classcntrl = TextEditingController();
+
   final pricecntrl = TextEditingController();
+  final emailcntrl = TextEditingController();
 
   @override
   void initState() {
@@ -26,6 +37,7 @@ class StudentListEditpage extends StatelessWidget {
 
     if (doc.exists) {
       namecntrl.text = doc['name'];
+      emailcntrl.text = doc['email'];
       agecntrl.text = doc['age'].toString();
       phonecntrl.text = doc['phone'];
       classcntrl.text = doc['class'] ?? '';
@@ -35,14 +47,16 @@ class StudentListEditpage extends StatelessWidget {
 
   void _updateUser() async {
     await FirebaseFirestore.instance
-        .collection('users')
+        .collection('students')
         .doc(widget.docId)
         .update({
+          'email': emailcntrl.text,
           'name': namecntrl.text,
           'age': int.parse(agecntrl.text),
           'phone': phonecntrl.text,
           'class': classcntrl.text,
-          'fees': pricecntrl, // new field added
+          'fees': int.parse(pricecntrl.text),
+          // new field added
         });
 
     ScaffoldMessenger.of(
@@ -61,6 +75,13 @@ class StudentListEditpage extends StatelessWidget {
             controller: namecntrl,
             hint: 'kannan',
             prefixIcon: Icons.person,
+            keyboardType: TextInputType.emailAddress,
+          ),
+          UserTextField(
+            label: "Email",
+            controller: phonecntrl,
+            hint: 'abc@gmail.com',
+            prefixIcon: Icons.mail,
             keyboardType: TextInputType.emailAddress,
           ),
           UserTextField(
@@ -95,7 +116,7 @@ class StudentListEditpage extends StatelessWidget {
           ),
 
           SizedBox(height: 5),
-          ElevatedButton(onPressed: () {}, child: Text("update Detials")),
+          ElevatedButton(onPressed: _updateUser, child: Text("update Detials")),
         ],
       ),
     );

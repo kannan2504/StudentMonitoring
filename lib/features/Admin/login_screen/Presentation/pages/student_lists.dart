@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_list_editpage.dart';
 
 class StudentLists extends StatelessWidget {
   const StudentLists({super.key});
@@ -22,13 +23,18 @@ class StudentLists extends StatelessWidget {
             itemBuilder: (context, index) {
               final data =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
-
+              final docId = snapshot.data!.docs[index].id;
               return Row(
                 children: [
                   Text(data['name']),
                   Text(data["age"].toString()),
                   InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/editlist'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StudentListEditpage(docId: docId),
+                      ),
+                    ),
                     child: Icon(Icons.edit),
                   ),
                 ],

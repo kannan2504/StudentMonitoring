@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:loginpage/features/Admin/homeWork/Presentaion/pages/HomeWorkPage.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
+import 'package:loginpage/features/Admin/profile/Presentaion/pages/HomeWorkPage.dart';
+import 'package:loginpage/main.dart';
+
+import 'homeWork/Presentaion/pages/HomeWorkPage.dart';
+import 'login_screen/Presentation/pages/home_screen.dart';
+import 'profile/Presentaion/pages/HomeWorkPage.dart';
+
+class MyBotNavBar extends StatefulWidget {
+  const MyBotNavBar({super.key});
+  @override
+  State<MyBotNavBar> createState() => _MyBotNavBarState();
+}
+
+class _MyBotNavBarState extends State<MyBotNavBar> {
+  int _currentIndex = 0;
+  final List<Widget> _screens = [HomePage(), Homeworkpage(), ProfilePage()];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [],
+      ),
+    );
+  }
+}

@@ -1,4 +1,4 @@
-import 'package:loginpage/features/login_screen/Domain/Entity/User.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Entity/User.dart';
 
 abstract class AuthRepository {
   Future<User> signInWithGoogle();

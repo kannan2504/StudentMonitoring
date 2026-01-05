@@ -1,5 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:loginpage/features/login_screen/Data/Entity/UserModal.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Entity/UserModal.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> login(String email, String password);

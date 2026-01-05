@@ -1,5 +1,5 @@
-import 'package:loginpage/features/login_screen/Domain/Entity/User.dart';
-import 'package:loginpage/features/login_screen/Domain/Repository/AuthRepositry.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Entity/User.dart';
+import 'package:loginpage/features/Admin/login_screen/Domain/Repository/AuthRepositry.dart';
 
 class RegisterUseCase {
   final AuthRepository repository;

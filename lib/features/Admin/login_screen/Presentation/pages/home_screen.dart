@@ -11,8 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
 import 'package:loginpage/core/constants/ImageConversion.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
-import 'package:loginpage/features/login_screen/Data/Service/google_auth_service.dart';
-import 'package:loginpage/features/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Service/google_auth_service.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   final agecntrl = TextEditingController();
   final datecntrl = TextEditingController();
   final classcntrl = TextEditingController();
+  final expcntrl = TextEditingController();
   DateTime? selectedJoinDate;
 
   Future<void> pickDate() async {
@@ -48,6 +49,101 @@ class _HomePageState extends State<HomePage> {
   File? _profileImage;
 
   final ImagePicker _picker = ImagePicker();
+
+  void _showDialog(bool type) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            InkWell(onTap: () => Navigator.pop(context), child: Text("cancel")),
+            InkWell(
+              onTap: () {
+                GoogleAuthService().addStudents(
+                  namecntrl.text.trim(),
+                  agecntrl.text.trim(),
+                  phonecntrl.text.trim(),
+                  classcntrl.text.trim(),
+                  selectedJoinDate!,
+                  context,
+                );
+              },
+              child: Text("Save"),
+            ),
+          ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                UserTextField(
+                  label: "Name",
+                  controller: namecntrl,
+                  hint: 'Kannan M',
+                  prefixIcon: Icons.person,
+                ),
+                SizedBox(height: 5),
+                UserTextField(
+                  label: "Phone number",
+                  controller: phonecntrl,
+                  hint: '123456789',
+                  prefixIcon: Icons.phone,
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: 5),
+                UserTextField(
+                  label: "Age",
+                  controller: agecntrl,
+                  hint: '22',
+                  prefixIcon: Icons.timer_outlined,
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: 5),
+                SizedBox(
+                  child: UserTextField(
+                    label: type ? "Qualification" : "class",
+                    controller: classcntrl,
+                    hint: 'UG',
+                    prefixIcon: Icons.menu_book_sharp,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                type
+                    ? UserTextField(
+                        label: "experience",
+                        controller: expcntrl,
+                        hint: '2',
+                        prefixIcon: Icons.av_timer_outlined,
+                        keyboardType: TextInputType.number,
+                      )
+                    : SizedBox(),
+                SizedBox(height: 5),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: datecntrl,
+
+                    readOnly: true, // 🔒 disables typing
+                    onTap: pickDate, // 📅 opens date picker
+                    decoration: InputDecoration(
+                      labelText: "Join Date",
+                      hintText: "dd-mm-yyyy",
+                      prefixIcon: Icon(Icons.date_range),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> pickAndCropImage() async {
     try {
@@ -189,96 +285,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              actions: [
-                                InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  child: Text("cancel"),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    GoogleAuthService().addStudents(
-                                      namecntrl.text.trim(),
-                                      agecntrl.text.trim(),
-                                      phonecntrl.text.trim(),
-                                      classcntrl.text.trim(),
-                                      selectedJoinDate!,
-                                      context,
-                                    );
-                                  },
-                                  child: Text("Save"),
-                                ),
-                              ],
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    UserTextField(
-                                      label: "Name",
-                                      controller: namecntrl,
-                                      hint: 'Kannan M',
-                                      prefixIcon: Icons.person,
-                                    ),
-                                    SizedBox(height: 5),
-                                    UserTextField(
-                                      label: "Phone number",
-                                      controller: phonecntrl,
-                                      hint: '123456789',
-                                      prefixIcon: Icons.phone,
-                                      keyboardType: TextInputType.phone,
-                                    ),
-                                    SizedBox(height: 5),
-                                    UserTextField(
-                                      label: "Age",
-                                      controller: agecntrl,
-                                      hint: '22',
-                                      prefixIcon: Icons.timer_outlined,
-                                      keyboardType: TextInputType.phone,
-                                    ),
-                                    SizedBox(height: 5),
-                                    UserTextField(
-                                      label: "class",
-                                      controller: classcntrl,
-                                      hint: 'UG',
-                                      prefixIcon: Icons.menu_book_sharp,
-                                      keyboardType: TextInputType.phone,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: isDark
-                                            ? Colors.grey.shade900
-                                            : Colors.grey.shade200,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: TextField(
-                                        controller: datecntrl,
-
-                                        readOnly: true, // 🔒 disables typing
-                                        onTap: pickDate, // 📅 opens date picker
-                                        decoration: InputDecoration(
-                                          labelText: "Join Date",
-                                          hintText: "dd-mm-yyyy",
-                                          prefixIcon: Icon(Icons.date_range),
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.symmetric(
-                                            vertical: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
+                      onTap: () {},
                       child: Card(
                         child: Column(
                           children: [
@@ -289,6 +296,24 @@ class _HomePageState extends State<HomePage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Add Student"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: InkWell(
+                        onTap: () =>
+                            Navigator.pushNamed(context, '/studentList'),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(child: Icon(Icons.add)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Add Teacher"),
                             ),
                           ],
                         ),
