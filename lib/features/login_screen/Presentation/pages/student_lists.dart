@@ -23,9 +23,15 @@ class StudentLists extends StatelessWidget {
               final data =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
-              return ListTile(
-                title: Text(data['name']),
-                trailing: Text(data["age"].toString()),
+              return Row(
+                children: [
+                  Text(data['name']),
+                  Text(data["age"].toString()),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/editlist'),
+                    child: Icon(Icons.edit),
+                  ),
+                ],
               );
             },
           );

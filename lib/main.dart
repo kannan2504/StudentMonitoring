@@ -6,6 +6,7 @@ import 'package:loginpage/features/login_screen/Domain/Usecases/GoogleSIgninUsec
 import 'package:loginpage/features/login_screen/Presentation/pages/home_screen.dart';
 import 'package:loginpage/features/login_screen/Presentation/pages/registerPage.dart';
 import 'package:loginpage/features/login_screen/Presentation/pages/splash_screen.dart';
+import 'package:loginpage/features/login_screen/Presentation/pages/student_list_editpage.dart';
 import 'package:loginpage/features/login_screen/Presentation/pages/student_lists.dart';
 import 'package:loginpage/features/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/features/login_screen/Presentation/pages/loginPage.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.reset: (context) => ResetScreen(),
         AppRoutes.editpage: (context) => EditPage(),
         AppRoutes.studentlists: (context) => StudentLists(),
+        // AppRoutes.editlist: (context) => StudentListEditpage(),
       },
     );
   }
@@ -66,4 +68,6 @@ class AppRoutes {
   static const String editpage = '/editpage';
   static const String studentform = '/studentform';
   static const String studentlists = '/studentList';
+
+  static const String editlist = '/editlist';
 }
