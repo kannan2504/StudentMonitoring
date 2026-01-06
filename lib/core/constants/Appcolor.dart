@@ -7,7 +7,7 @@ class Appcolor {
   static Color greenColor = const Color.fromARGB(255, 74, 228, 94);
   static Color yellowColor = Color.fromARGB(255, 209, 195, 65);
   static Color blackColor = const Color.fromARGB(255, 19, 18, 18);
-  static Color whiteColor = const Color.fromARGB(255, 245, 243, 243);
+  static Color whiteColor = const Color.fromARGB(255, 255, 255, 255);
 
   // // ===== RED THEME =====
   // static const redPrimary = Color.fromARGB(255, 238, 90, 79);

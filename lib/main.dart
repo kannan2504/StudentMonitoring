@@ -11,6 +11,7 @@ import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/loginPage.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Students/BottomNavBar.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: StudentBottomNav(),
       initialRoute: AppRoutes.splash,
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(),
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.reset: (context) => ResetScreen(),
         AppRoutes.editpage: (context) => EditPage(),
         AppRoutes.studentlists: (context) => StudentLists(),
+        // AppRoutes.editlist: (context) => StudentListEditpage(),
       },
     );
   }

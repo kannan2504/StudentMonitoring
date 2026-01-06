@@ -440,6 +440,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  line_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: line_awesome_flutter
+      sha256: "6e1ec935d75c2ccc12e83f609975efa271d82709bb99c170aa52dd549f19f637"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0-nullsafety"
   lints:
     dependency: transitive
     description:
@@ -480,6 +488,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  motion_tab_bar_v2:
+    dependency: "direct main"
+    description:
+      name: motion_tab_bar_v2
+      sha256: b25e1e40c9d2d8478a19b42b6eace262117c2646162368c4d30ede800e65cf9e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   nested:
     dependency: transitive
     description:
