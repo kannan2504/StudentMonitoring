@@ -11,7 +11,7 @@ import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/loginPage.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
-import 'package:loginpage/features/Students/BottomNavBar.dart';
+import 'package:loginpage/features/Students/StudentBottomNav.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -45,18 +45,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: StudentBottomNav(),
-      initialRoute: AppRoutes.splash,
-      routes: {
-        AppRoutes.splash: (context) => const SplashScreen(),
-        AppRoutes.login: (context) => const LoginPage(),
-        AppRoutes.register: (context) => const RegisterPage(),
-        AppRoutes.home: (context) => HomePage(),
-        AppRoutes.reset: (context) => ResetScreen(),
-        AppRoutes.editpage: (context) => EditPage(),
-        AppRoutes.studentlists: (context) => StudentLists(),
-        // AppRoutes.editlist: (context) => StudentListEditpage(),
-      },
+      home: StudentBottomNav(),
+      // initialRoute: AppRoutes.splash,
+      // routes: {
+      //   AppRoutes.splash: (context) => const SplashScreen(),
+      //   AppRoutes.login: (context) => const LoginPage(),
+      //   AppRoutes.register: (context) => const RegisterPage(),
+      //   AppRoutes.home: (context) => HomePage(),
+      //   AppRoutes.reset: (context) => ResetScreen(),
+      //   AppRoutes.editpage: (context) => EditPage(),
+      //   AppRoutes.studentlists: (context) => StudentLists(),
+      //   // AppRoutes.editlist: (context) => StudentListEditpage(),
+      // },
     );
   }
 }

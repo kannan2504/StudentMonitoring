@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
 import 'package:motion_tab_bar_v2/motion-badge.widget.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
@@ -43,7 +44,7 @@ class _StudentBottomNavState extends State<StudentBottomNav>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: _screens[_motionTabBarController.index],
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController,
@@ -84,7 +85,7 @@ class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('📊 Dashboard Page'));
+    return HomePage();
   }
 }
 
