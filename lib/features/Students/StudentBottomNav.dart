@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
+import 'package:loginpage/features/Students/Screens/DashBoard.dart';
 import 'package:motion_tab_bar_v2/motion-badge.widget.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
@@ -20,7 +21,7 @@ class _StudentBottomNavState extends State<StudentBottomNav>
   late MotionTabBarController _motionTabBarController;
 
   final List<Widget> _screens = [
-    const DashboardPage(),
+    const StudentDashBoard(),
     const ChatPage(),
     const AssignmentPage(),
     const ProfilePage(),
@@ -62,14 +63,14 @@ class _StudentBottomNavState extends State<StudentBottomNav>
         tabIconSelectedSize: 34.0,
         tabIconColor: Colors.white70,
         tabSelectedColor: Appcolor.whiteColor,
-        tabIconSelectedColor: Appcolor.primaryLight,
+        tabIconSelectedColor: Appcolor.bottomNavActiveIcon,
         textStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: Colors.white70,
         ),
 
-        tabBarColor: Colors.blueAccent,
+        tabBarColor: Appcolor.bottomNavBackground,
         onTabItemSelected: (index) {
           setState(() {
             _motionTabBarController.index = index;
@@ -77,15 +78,6 @@ class _StudentBottomNavState extends State<StudentBottomNav>
         },
       ),
     );
-  }
-}
-
-// Example Pages
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return HomePage();
   }
 }
 

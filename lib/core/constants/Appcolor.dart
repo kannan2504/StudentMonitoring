@@ -29,20 +29,73 @@ class Appcolor {
 
   // ===== BLUE THEME =====
   // ------------------------
-  // Solid Colors
+  // Core Blues
   // ------------------------
-  static const Color primary = Color(0xFF1E3A8A); // Deep Blue
-  static const Color primaryLight = Color(0xFF3B82F6); // Sky Blue
-  static const Color accent = Color(0xFF06B6D4); // Cyan
-  static const Color background = Color(0xFFEFF6FF); // Light Blue
-  static const Color surface = Color(0xFFFFFFFF); // White for cards
-  static const Color textPrimary = Color(0xFF1E40AF); // Dark Blue
-  static const Color textSecondary = Color(0xFF64748B); // Grayish Blue
-  static const Color error = Color(0xFFEF4444); // Red
-  static const Color success = Color(0xFF22C55E); // Green
+  static const Color bluePrimary = Colors.blueAccent; // Main bottom nav blue
+  static const Color blueDark = Color(0xFF1E3A8A); // Deep blue
+  static const Color blueLight = Color.fromARGB(
+    255,
+    228,
+    241,
+    255,
+  ); // Soft light blue
 
   // ------------------------
-  // Gradients
+  // Backgrounds
+  // ------------------------
+  static const Color scaffoldBackground = Color(
+    0xFFFDF7FB,
+  ); // Soft pink-white bg
+  static const Color pageBackground = Color(0xFFF8FAFF);
+
+  // ------------------------
+  // Bottom Navigation Bar
+  // ------------------------
+  static const Color bottomNavBackground = Color(0xFF4F8CFF);
+  static const Color bottomNavActiveIcon = Colors.blueAccent;
+  static const Color bottomNavInactiveIcon = Color(0xFFD6E4FF);
+  static const Color bottomNavIndicator = Color(0xFFFFFFFF);
+
+  // ------------------------
+  // Icons (Global)
+  // ------------------------
+  static const Color iconPrimary = Color(0xFF1E3A8A);
+  static const Color iconSecondary = Color(0xFF94A3B8);
+  static const Color iconOnPrimary = Color(0xFFFFFFFF);
+
+  // ------------------------
+  // Text
+  // ------------------------
+  static const Color textPrimary = Color(0xFF1E293B);
+  static const Color textSecondary = Color(0xFF64748B);
+  static const Color textOnPrimary = Color(0xFFFFFFFF);
+
+  // ------------------------
+  // Cards & Containers
+  // ------------------------
+  static const Color cardBackground = Color(0xFFFFFFFF);
+  static const Color containerBackground = Color(0xFFFFFAFF);
+
+  static const Color cardShadow = Color.fromARGB(35, 79, 140, 255);
+
+  // ------------------------
+  // Gradient (for premium look)
+  // ------------------------
+  static const LinearGradient bottomNavGradient = LinearGradient(
+    colors: [Color(0xFF4F8CFF), Color(0xFF3B82F6)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // ------------------------
+  // Status Colors
+  // ------------------------
+  static const Color success = Color(0xFF22C55E);
+  static const Color error = Color(0xFFEF4444);
+  static const Color warning = Color(0xFFF59E0B);
+
+  // ------------------------
+  // UNIVERSAL GRADIENTS (Use anywhere)
   // ------------------------
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [Color(0xFF1E3A8A), Color(0xFF3B82F6)],
@@ -51,27 +104,15 @@ class Appcolor {
   );
 
   static const LinearGradient accentGradient = LinearGradient(
-    colors: [Color(0xFF06B6D4), Color(0xFF3B82F6)],
+    colors: [Color(0xFF3B82F6), Color(0xFF06B6D4)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
   static const LinearGradient backgroundGradient = LinearGradient(
-    colors: [Color(0xFFEFF6FF), Color(0xFFDBEAFE)],
+    colors: [Color(0xFFF8FAFF), Color(0xFFEFF6FF)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-  );
-
-  static const LinearGradient successGradient = LinearGradient(
-    colors: [Color(0xFF22C55E), Color(0xFF4ADE80)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient errorGradient = LinearGradient(
-    colors: [Color(0xFFEF4444), Color(0xFFF87171)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
   );
 
   // ===== YELLOW THEME =====
