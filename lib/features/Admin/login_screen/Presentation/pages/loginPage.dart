@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool obscurePassword = true;
 
-  Future<void> navToHomePage(String uid) async {
+  Future<void> navToHomePage(String emailid) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
@@ -34,10 +34,10 @@ class _LoginPageState extends State<LoginPage> {
 
     final studentDoc = await FirebaseFirestore.instance
         .collection("students")
-        .doc(uid)
+        .where("email", isEqualTo: emailid)
         .get();
 
-    if (studentDoc.exists) {
+    if (studentDoc.docs.isNotEmpty) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const StudentDashBoard()),
@@ -46,10 +46,10 @@ class _LoginPageState extends State<LoginPage> {
     }
     final teacherDoc = await FirebaseFirestore.instance
         .collection("teachers")
-        .doc(uid)
+        .where("email", isEqualTo: emailid)
         .get();
 
-    if (teacherDoc.exists) {
+    if (teacherDoc.docs.isNotEmpty) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => ProfilePage()),
@@ -58,10 +58,10 @@ class _LoginPageState extends State<LoginPage> {
     }
     final usersDoc = await FirebaseFirestore.instance
         .collection("users")
-        .doc(uid)
+        .where("email", isEqualTo: emailid)
         .get();
 
-    if (usersDoc.exists) {
+    if (usersDoc.docs.isNotEmpty) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => HomePage()),
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       print("Email verified: ${cred.user!.emailVerified}");
 
-      await navToHomePage(cred.user!.uid);
+      await navToHomePage(cred.user!.email!);
     } catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: theme.backgroundColor,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (emailController.text.isEmpty &&
                           passwordController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
