@@ -9,8 +9,49 @@ class GoogleAuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  Future<void> addTeacher(
+    String name,
+    String email,
+    String age,
+    String phone,
+    String Qualification,
+    String experience,
+    DateTime Joineddate,
+    BuildContext context,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    try {
+      if (user == null) return;
+      await FirebaseFirestore.instance.collection('teachers').add({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'age': int.tryParse(age) ?? 0,
+        'class': Qualification,
+        'experience': experience,
+        'joinDate': Timestamp.fromDate(Joineddate),
+        'createdAt': FieldValue.serverTimestamp(),
+        'createdBy': user.uid,
+      });
+
+      Navigator.pop(context); // close dialog
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Teacher added successfully")),
+      );
+    } catch (e) {
+      debugPrint("Teacher save error: $e");
+    }
+  }
+
+  Future<void> deleteTeacher(String docid) async {
+    await _firestore.collection('teachers').doc(docid).delete();
+  }
+
   Future<void> addStudents(
     String name,
+    String email,
     String age,
     String phone,
     String standard,
@@ -23,6 +64,7 @@ class GoogleAuthService {
       if (user == null) return;
       await FirebaseFirestore.instance.collection('students').add({
         'name': name,
+        'email': email,
         'phone': phone,
         'age': int.tryParse(age) ?? 0,
         'class': standard,
@@ -30,10 +72,6 @@ class GoogleAuthService {
         'createdAt': FieldValue.serverTimestamp(),
         'createdBy': user.uid,
       });
-
-      print(
-        "Firebase Created44444444444444444444444444444444444455555555555555566666666666666666666666111111111111122222 ",
-      );
 
       Navigator.pop(context); // close dialog
 
@@ -43,6 +81,10 @@ class GoogleAuthService {
     } catch (e) {
       debugPrint("Student save error: $e");
     }
+  }
+
+  Future<void> deleteStudent(String docid) async {
+    await _firestore.collection('students').doc(docid).delete();
   }
 
   Future<void> resetPassword(String email, BuildContext context) async {
@@ -121,6 +163,7 @@ class GoogleAuthService {
       });
     }
   }
+
 
   Future<Map<String, dynamic>> getUser() async {
     final user = FirebaseAuth.instance.currentUser!;

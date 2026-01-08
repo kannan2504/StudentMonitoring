@@ -1,10 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:flutter/material.dart';
+import 'package:loginpage/features/Admin/login_screen/Data/Service/google_auth_service.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_list_editpage.dart';
 
 class StudentLists extends StatelessWidget {
   const StudentLists({super.key});
+
+  void showDeleteDialog(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete Student"),
+          content: const Text("Are you sure you want to delete this student?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                await GoogleAuthService().deleteStudent(docId);
+                Navigator.pop(context);
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +41,6 @@ class StudentLists extends StatelessWidget {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           }
-
-          print("ALL students count: ${snapshot.data!.docs.length}");
-
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
@@ -36,6 +59,10 @@ class StudentLists extends StatelessWidget {
                       ),
                     ),
                     child: Icon(Icons.edit),
+                  ),
+                  InkWell(
+                    onTap: () => showDeleteDialog(context, docId),
+                    child: Icon(Icons.delete),
                   ),
                 ],
               );

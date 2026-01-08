@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loginpage/core/constants/Appcolor.dart';
 import 'package:loginpage/features/Admin/login_screen/Data/Service/google_auth_service.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
+import 'package:loginpage/features/Students/Screens/DashBoard.dart';
+import 'package:loginpage/features/Students/StudentBottomNav.dart';
 import 'package:loginpage/main.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +26,57 @@ class _LoginPageState extends State<LoginPage> {
 
   bool obscurePassword = true;
 
+  Future<void> navToHomePage(String uid) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    String uid = user.uid;
+
+    final studentDoc = await FirebaseFirestore.instance
+        .collection("students")
+        .doc(uid)
+        .get();
+
+    if (studentDoc.exists) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const StudentDashBoard()),
+      );
+      return;
+    }
+    final teacherDoc = await FirebaseFirestore.instance
+        .collection("teachers")
+        .doc(uid)
+        .get();
+
+    if (teacherDoc.exists) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => ProfilePage()),
+      );
+      return;
+    }
+    final usersDoc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .get();
+
+    if (usersDoc.exists) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage()),
+      );
+      return;
+    }
+
+    // ❌ Not found in any collection
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text("User role not found")));
+
+    await FirebaseAuth.instance.signOut();
+  }
+
   Future<void> loginUSer() async {
     try {
       UserCredential cred = await FirebaseAuth.instance
@@ -29,13 +85,17 @@ class _LoginPageState extends State<LoginPage> {
             password: passwordController.text.trim(),
           );
       if (!cred.user!.emailVerified) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Please verify your email")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please verify your email and login again"),
+          ),
+        );
         await FirebaseAuth.instance.signOut();
         return;
       }
-      Navigator.pushReplacementNamed(context, '/home');
+      print("Email verified: ${cred.user!.emailVerified}");
+
+      await navToHomePage(cred.user!.uid);
     } catch (e) {
       ScaffoldMessenger.of(
         context,
