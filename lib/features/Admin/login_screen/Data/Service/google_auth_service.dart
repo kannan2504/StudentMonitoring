@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,52 @@ class GoogleAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> makeAdmin(
+    BuildContext context,
+    Map<String, dynamic> teacher,
+  ) async {
+    final teacherId = teacher['id'];
+
+    try {
+      // 1️⃣ Update TEACHER role
+      await FirebaseFirestore.instance
+          .collection('teachers')
+          .doc(teacherId)
+          .update({"role": "admin"});
+
+      // 2️⃣ Save / Update USER collection
+      await FirebaseFirestore.instance.collection('users').doc(teacherId).set({
+        "name": teacher['name'],
+        "email": teacher['email'],
+        "role": "admin",
+        "from": "teacher",
+      }, SetOptions(merge: true));
+
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Admin created successfully")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: $e")));
+    }
+  }
+
+  Future<void> saveNewAdmin(Map<String, dynamic> data) async {
+    final doc = FirebaseFirestore.instance.collection('users').doc();
+
+    // users
+    await doc.set({...data, "role": "admin"});
+
+    // teachers
+    await FirebaseFirestore.instance.collection('teachers').doc(doc.id).set({
+      ...data,
+      "role": "admin",
+    });
+  }
 
   Future<void> addTeacher(
     String name,
@@ -49,13 +96,43 @@ class GoogleAuthService {
     await _firestore.collection('teachers').doc(docid).delete();
   }
 
+  Future<void> deletesubject(String scode) async {
+    await _firestore.collection('subjects').doc(scode).delete();
+  }
+
+  Future<void> addSubject(
+    String sname,
+    String scode,
+    BuildContext context,
+  ) async {
+    final sub = FirebaseAuth.instance.currentUser;
+
+    try {
+      if (sub == null) return;
+      await FirebaseFirestore.instance.collection('subjects').doc(scode).set({
+        'name': sname,
+        'code': scode,
+      });
+
+      //Navigator.pop(context); // close dialog
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("subject  added successfully")),
+      );
+    } catch (e) {
+      debugPrint("subject save error: $e");
+    }
+  }
+
   Future<void> addStudents(
     String name,
     String email,
     String age,
     String phone,
-    String standard,
+    String classc,
+    String year,
     DateTime date,
+
     BuildContext context,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
@@ -67,17 +144,21 @@ class GoogleAuthService {
         'email': email,
         'phone': phone,
         'age': int.tryParse(age) ?? 0,
-        'class': standard,
+        'class': classc,
+        'year': year,
+        'type': 'student',
+
         'joinDate': Timestamp.fromDate(date),
         'createdAt': FieldValue.serverTimestamp(),
         'createdBy': user.uid,
       });
 
-      Navigator.pop(context); // close dialog
+      // close dialog
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Student added successfully")),
       );
+      Navigator.pop(context);
     } catch (e) {
       debugPrint("Student save error: $e");
     }
@@ -163,6 +244,7 @@ class GoogleAuthService {
       });
     }
   }
+
 
 
   Future<Map<String, dynamic>> getUser() async {

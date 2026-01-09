@@ -225,7 +225,10 @@ class _LoginPageState extends State<LoginPage> {
                     final user = await GoogleAuthService().signInWithGoogle();
 
                     if (user != null && context.mounted) {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/admindashboard',
+                      );
                     }
                   },
                 ),

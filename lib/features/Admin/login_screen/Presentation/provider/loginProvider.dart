@@ -35,7 +35,6 @@ class LoginProvider extends ChangeNotifier {
             'name': name,
             'email': email,
             'mobile': mobile,
-            'type': "student",
 
             'createdAt': FieldValue.serverTimestamp(),
           });

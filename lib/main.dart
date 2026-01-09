@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:loginpage/features/Admin/login_screen/Data/Logic/AuthRemoteDataSource.dart';
 import 'package:loginpage/features/Admin/login_screen/Data/Repository/RepoImpl.dart';
 import 'package:loginpage/features/Admin/login_screen/Domain/Usecases/GoogleSIgninUsecase.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/admin_dashboard.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_screen.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/registerPage.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/splash_screen.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_list_editpage.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/student_lists.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/subjects_screen.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/teacher_list.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/pages/loginPage.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
@@ -55,7 +58,10 @@ class MyApp extends StatelessWidget {
         AppRoutes.reset: (context) => ResetScreen(),
         AppRoutes.editpage: (context) => EditPage(),
         AppRoutes.studentlists: (context) => StudentLists(),
-        // AppRoutes.editlist: (context) => StudentListEditpage(),
+        AppRoutes.SubjectsScreen: (context) => SubjectsScreen(),
+        AppRoutes.teacherlists: (context) => TeacherList(),
+
+        AppRoutes.AdminDashboard: (context) => AdminDashboard(),
       },
     );
   }
@@ -70,4 +76,9 @@ class AppRoutes {
   static const String editpage = '/editpage';
   static const String studentform = '/studentform';
   static const String studentlists = '/studentList';
+  static const String SubjectsScreen = '/subjectscreen';
+
+  static const String teacherlists = '/teacherList';
+
+  static const String AdminDashboard = '/admindashboard';
 }

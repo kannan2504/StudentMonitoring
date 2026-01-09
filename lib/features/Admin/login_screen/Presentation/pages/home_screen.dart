@@ -11,6 +11,7 @@ import 'package:loginpage/core/constants/Appcolor.dart';
 import 'package:loginpage/core/constants/ImageConversion.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
 import 'package:loginpage/features/Admin/login_screen/Data/Service/google_auth_service.dart';
+import 'package:loginpage/features/Admin/login_screen/Presentation/pages/teacher_list.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   final classcntrl = TextEditingController();
   final expcntrl = TextEditingController();
   final emailcntrl = TextEditingController();
+  final yearcntrl = TextEditingController();
   DateTime? selectedJoinDate;
 
   Future<void> pickDate() async {
@@ -50,13 +52,35 @@ class _HomePageState extends State<HomePage> {
 
   final ImagePicker _picker = ImagePicker();
 
-  void _ShowAdminAlert() {
+  void _showAdminAlert() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          actions: [Text("Existing "), Text("New")],
-          content: SizedBox(child: Text("Select admin")),
+          title: const Text("Select Admin Type"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const TeacherList(
+                      selectMode: true, // 👈 important
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Existing"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                // Navigate to Add New Admin Page
+              },
+              child: const Text("New"),
+            ),
+          ],
         );
       },
     );
@@ -89,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                         agecntrl.text.trim(),
                         phonecntrl.text.trim(),
                         classcntrl.text.trim(),
+                        yearcntrl.text.trim(),
                         selectedJoinDate!,
                         context,
                       );
@@ -137,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 5),
                   SizedBox(
                     child: UserTextField(
-                      label: type ? "Qualification" : "class",
+                      label: type ? "Qualification" : "Dept",
                       controller: classcntrl,
                       hint: 'UG',
                       prefixIcon: Icons.menu_book_sharp,
@@ -152,7 +177,13 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icons.av_timer_outlined,
                           keyboardType: TextInputType.number,
                         )
-                      : SizedBox(),
+                      : UserTextField(
+                          label: "year",
+                          controller: yearcntrl,
+                          hint: '2',
+                          prefixIcon: Icons.av_timer_outlined,
+                          keyboardType: TextInputType.number,
+                        ),
                   SizedBox(height: 5),
                   Container(
                     decoration: BoxDecoration(
@@ -341,7 +372,7 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     GestureDetector(
-                      onTap: () => _ShowAdminAlert(),
+                      onTap: () => _showAdminAlert(),
 
                       child: Card(
                         child: Column(
@@ -375,7 +406,25 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/subjectscreen'),
 
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(child: Icon(Icons.add)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Add Subjects"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Card(
                       child: InkWell(
                         onTap: () =>
@@ -391,6 +440,24 @@ class _HomePageState extends State<HomePage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("View Students"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: InkWell(
+                        onTap: () =>
+                            Navigator.pushNamed(context, '/teacherList'),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(child: Icon(Icons.person)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("View Teachers"),
                             ),
                           ],
                         ),
