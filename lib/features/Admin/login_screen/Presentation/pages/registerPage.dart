@@ -20,7 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailCtrl = TextEditingController();
   final passCtrl = TextEditingController();
   final mobileCtrl = TextEditingController();
-  // final typecntrl = TextEditingController();
+  final expCtrl = TextEditingController();
+  final classCtrl = TextEditingController();
+  String selectedType = 'Student';
 
   bool obscurePassword = true;
   @override
@@ -92,27 +94,47 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.phone,
                         ),
                         const SizedBox(height: 12),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              // controller: typecntrl,
-                              initialValue: "Student",
-                              enabled: false, // 🔒 disables typing
-                              decoration: InputDecoration(
-                                labelText: "Type",
-                                disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
+                        DropdownButtonFormField<String>(
+                          value: selectedType,
+                          decoration: InputDecoration(
+                            labelText: "Type",
+                            prefixIcon: const Icon(Icons.person_outline),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          items: const [
+                            DropdownMenuItem(
+                              value: "Student",
+                              child: Text("Student"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Teacher",
+                              child: Text("Teacher"),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              selectedType = value!;
+                            });
+                          },
                         ),
-
+                        SizedBox(height: 12),
+                        UserTextField(
+                          label: "Experience",
+                          controller: expCtrl,
+                          hint: "2",
+                          prefixIcon: Icons.add,
+                          isPassword: true,
+                        ),
+                        SizedBox(height: 12),
+                        UserTextField(
+                          label: "Qualification",
+                          controller: classCtrl,
+                          hint: "B.E",
+                          prefixIcon: Icons.density_large_rounded,
+                          isPassword: true,
+                        ),
                         const SizedBox(height: 24),
 
                         auth.isLoading
@@ -126,8 +148,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                     name: nameCtrl.text,
                                     email: emailCtrl.text,
                                     password: passCtrl.text,
-
+                                    role: selectedType,
                                     mobile: mobileCtrl.text,
+                                    qualify: classCtrl.text,
+                                    experience: expCtrl.text,
                                   );
 
                                   if (success && context.mounted) {

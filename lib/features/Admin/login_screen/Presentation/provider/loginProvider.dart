@@ -17,8 +17,15 @@ class LoginProvider extends ChangeNotifier {
     required String email,
     required String password,
     required String mobile,
+    required String role,
+    required String qualify,
+    required String experience,
   }) async {
     try {
+      String collectionName = role.toLowerCase() == 'teacher'
+          ? 'teachers'
+          : 'students';
+
       isLoading = true;
       notifyListeners();
 
@@ -28,13 +35,17 @@ class LoginProvider extends ChangeNotifier {
 
       // 2️⃣ Firestore save
       await FirebaseFirestore.instance
-          .collection('students')
+          .collection(collectionName)
           .doc(cred.user!.uid)
           .set({
             'uid': cred.user!.uid,
             'name': name,
             'email': email,
             'mobile': mobile,
+            'role': role,
+            'class':qualify,
+            'experience':experience,
+            
 
             'createdAt': FieldValue.serverTimestamp(),
           });
@@ -55,23 +66,23 @@ class LoginProvider extends ChangeNotifier {
 
   LoginProvider(this.googleSignInUseCase);
 
-  Future<bool> registerUser({
-    required String name,
-    required String email,
-    required String password,
-    required String gender,
-    required String mobile,
-  }) async {
-    isLoading = true;
-    notifyListeners();
+  // Future<bool> registerUser({
+  //   required String name,
+  //   required String email,
+  //   required String password,
+  //   required String gender,
+  //   required String mobile,
+  // }) async {
+  //   isLoading = true;
+  //   notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 2)); // API call simulation
+  //   await Future.delayed(const Duration(seconds: 2)); // API call simulation
 
-    isLoading = false;
-    notifyListeners();
+  //   isLoading = false;
+  //   notifyListeners();
 
-    return true;
-  }
+  //   return true;
+  // }
 
   Future<void> signInWithGoogle() async {
     isLoading = true;

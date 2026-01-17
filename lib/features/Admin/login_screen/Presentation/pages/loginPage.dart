@@ -8,8 +8,6 @@ import 'package:loginpage/features/Admin/login_screen/Presentation/pages/home_sc
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/loginProvider.dart';
 import 'package:loginpage/core/widgets/CustomTextField.dart';
 import 'package:loginpage/features/Admin/login_screen/Presentation/provider/themeprovider.dart';
-import 'package:loginpage/features/Students/Screens/DashBoard.dart';
-import 'package:loginpage/features/Students/StudentBottomNav.dart';
 import 'package:loginpage/main.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     if (studentDoc.docs.isNotEmpty) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const StudentDashBoard()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
       return;
     }
@@ -52,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     if (teacherDoc.docs.isNotEmpty) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ProfilePage()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
       return;
     }

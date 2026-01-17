@@ -106,13 +106,16 @@ class GoogleAuthService {
     BuildContext context,
   ) async {
     final sub = FirebaseAuth.instance.currentUser;
+    final uid = FirebaseAuth.instance.currentUser!.uid;
 
     try {
       if (sub == null) return;
-      await FirebaseFirestore.instance.collection('subjects').doc(scode).set({
-        'name': sname,
-        'code': scode,
-      });
+      await FirebaseFirestore.instance
+          .collection('teachers')
+          .doc(uid)
+          .collection("subjects")
+          .doc(scode)
+          .set({'name': sname, 'code': scode});
 
       //Navigator.pop(context); // close dialog
 
@@ -122,6 +125,31 @@ class GoogleAuthService {
     } catch (e) {
       debugPrint("subject save error: $e");
     }
+  }
+
+  Future<int> generateRollNumber(String year) async {
+    final counterRef = FirebaseFirestore.instance
+        .collection('students')
+        .doc('counters')
+        .collection('years')
+        .doc(year);
+
+    return FirebaseFirestore.instance.runTransaction((transaction) async {
+      final snapshot = await transaction.get(counterRef);
+
+      int lastRoll = 0;
+      if (snapshot.exists) {
+        lastRoll = snapshot['lastRoll'];
+      }
+
+      final newRoll = lastRoll + 1;
+
+      transaction.set(counterRef, {
+        'lastRoll': newRoll,
+      }, SetOptions(merge: true));
+
+      return newRoll;
+    });
   }
 
   Future<void> addStudents(
@@ -136,22 +164,28 @@ class GoogleAuthService {
     BuildContext context,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
+    final parsedYear = year.trim();
+    final rollNo = await generateRollNumber(parsedYear);
 
     try {
       if (user == null) return;
-      await FirebaseFirestore.instance.collection('students').add({
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'age': int.tryParse(age) ?? 0,
-        'class': classc,
-        'year': year,
-        'type': 'student',
-
-        'joinDate': Timestamp.fromDate(date),
-        'createdAt': FieldValue.serverTimestamp(),
-        'createdBy': user.uid,
-      });
+      await FirebaseFirestore.instance
+          .collection('students')
+          .doc(parsedYear)
+          .collection('lists')
+          .doc(rollNo.toString())
+          .set({
+            'name': name,
+            "rollno": rollNo,
+            'email': email,
+            'phone': phone,
+            'age': int.tryParse(age) ?? 0,
+            'class': classc,
+            'year': year,
+            'role': 'student',
+            'joinDate': Timestamp.fromDate(date),
+            'createdAt': FieldValue.serverTimestamp(),
+          });
 
       // close dialog
 
@@ -244,8 +278,6 @@ class GoogleAuthService {
       });
     }
   }
-
-
 
   Future<Map<String, dynamic>> getUser() async {
     final user = FirebaseAuth.instance.currentUser!;

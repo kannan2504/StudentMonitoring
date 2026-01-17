@@ -54,6 +54,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: AppBar(title: Text("Add Subjects")),
       body: Column(
@@ -87,10 +88,11 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
           Divider(),
 
           Text("Subjects:"),
-
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
+                  .collection('teachers')
+                  .doc(uid)
                   .collection("subjects")
                   .snapshots(),
               builder: (context, snapshot) {
